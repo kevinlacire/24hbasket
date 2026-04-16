@@ -1,0 +1,316 @@
+/* ─── Reset ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Easing tokens ────────────────────────────────────── */
+:root {
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Page load entrance ───────────────────────────────── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Root layout ──────────────────────────────────────── */
+.scoreboard {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
+  background: #111;
+}
+
+/* ─── Header ───────────────────────────────────────────── */
+.scoreboard__header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1rem;
+  background: #0d0d0d;
+  border-bottom: 1px solid #333;
+  gap: 0.5rem;
+  animation: fade-in-up 0.4s var(--ease-out-quart) both;
+}
+
+.scoreboard__title {
+  font-size: clamp(0.8rem, 1.8vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.btn-mute {
+  padding: 0.25rem 0.7rem;
+  background: transparent;
+  border: 1px solid #555;
+  border-radius: 4px;
+  color: #ccc;
+  cursor: pointer;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  transition: border-color 0.2s var(--ease-out-quart),
+              color 0.2s var(--ease-out-quart),
+              background 0.2s var(--ease-out-quart);
+}
+.btn-mute:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.06); }
+
+/* ─── Countdown ────────────────────────────────────────── */
+.scoreboard__timer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0d0d0d;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #222;
+  animation: fade-in-up 0.4s var(--ease-out-quart) 0.07s both;
+}
+
+.timer-display {
+  font-family: var(--font-scoremark), sans-serif;
+  font-size: clamp(2.5rem, 9vw, 7rem);
+  line-height: 1;
+  color: #00e87a;
+  text-shadow: 0 0 18px rgba(0, 232, 122, 0.45);
+  letter-spacing: 0.04em;
+}
+
+/* Urgence chrono : < 5 min → amber, < 1 min → rouge rapide */
+.timer-display--warning {
+  color: #ffb347;
+  text-shadow: 0 0 18px rgba(255, 179, 71, 0.4);
+  animation: timer-pulse-slow 1.6s ease-in-out infinite;
+}
+
+.timer-display--critical {
+  color: #ff4c4c;
+  text-shadow: 0 0 18px rgba(255, 76, 76, 0.45);
+  animation: timer-pulse-fast 0.65s ease-in-out infinite;
+}
+
+.timer-display--finished {
+  color: #ff4c4c;
+  text-shadow: 0 0 18px rgba(255, 76, 76, 0.45);
+  animation: timer-pulse-fast 0.65s ease-in-out infinite;
+}
+
+@keyframes timer-pulse-slow {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes timer-pulse-fast {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.018); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.6; }
+}
+
+/* ─── Scores ───────────────────────────────────────────── */
+.scoreboard__scores {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: fade-in-up 0.5s var(--ease-out-quart) 0.14s both;
+}
+
+.scoreboard__teams {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+}
+
+.team {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.4rem, 1.2vh, 1rem);
+  padding: 0.5rem;
+  overflow: hidden;
+}
+
+/* Flash blanc au changement de score */
+.team__flash {
+  position: absolute;
+  inset: 0;
+  background: white;
+  pointer-events: none;
+  animation: team-flash 0.55s var(--ease-out-expo) both;
+}
+
+@keyframes team-flash {
+  0%   { opacity: 0.45; }
+  100% { opacity: 0; }
+}
+
+.team--blue { background: #c2e2dd; }
+.team--red  { background: #f4dae3; }
+
+.team__name {
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #333;
+  opacity: 0.65;
+}
+
+.team__score {
+  font-family: var(--font-scoremark), sans-serif;
+  font-size: clamp(4rem, 14vh, 11rem);
+  line-height: 1;
+  color: #1a1a2e;
+  animation: score-bump 0.45s var(--ease-out-expo) both;
+}
+
+@keyframes score-bump {
+  0%   { transform: scale(1); }
+  28%  { transform: scale(1.22); }
+  62%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* Shake quand le score tente de passer en négatif */
+.team__score--shake {
+  animation: score-shake 0.45s var(--ease-out-quart) both;
+}
+
+@keyframes score-shake {
+  0%, 100% { transform: translateX(0); }
+  20%  { transform: translateX(-10px); }
+  45%  { transform: translateX(10px); }
+  65%  { transform: translateX(-6px); }
+  82%  { transform: translateX(6px); }
+}
+
+.team__controls {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-score {
+  padding: 0.3rem 0.75rem;
+  border: 2px solid;
+  border-radius: 4px;
+  font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.15s var(--ease-out-quart),
+              color 0.15s var(--ease-out-quart),
+              transform 0.1s var(--ease-out-quart),
+              box-shadow 0.15s var(--ease-out-quart);
+}
+.btn-score:hover  { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.btn-score:active { transform: scale(0.92) translateY(0); box-shadow: none; }
+
+.btn-score--add { border-color: #2a9d5c; color: #1d7a44; }
+.btn-score--add:hover { background: #2a9d5c; color: #fff; }
+
+.btn-score--sub { border-color: #c94040; color: #a33232; }
+.btn-score--sub:hover { background: #c94040; color: #fff; }
+
+/* ─── Sound Effects ────────────────────────────────────── */
+.scoreboard__sounds {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.6rem;
+  background: #1a1a2e;
+  border-top: 1px solid #2a2a45;
+  animation: fade-in-up 0.4s var(--ease-out-quart) 0.26s both;
+}
+
+.btn-sound {
+  position: relative;
+  padding: 0.28rem 0.65rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  font-size: clamp(0.6rem, 1.2vw, 0.82rem);
+  white-space: nowrap;
+  transition: background 0.15s var(--ease-out-quart),
+              border-color 0.15s var(--ease-out-quart),
+              transform 0.1s var(--ease-out-quart);
+}
+.btn-sound:hover  { background: rgba(255, 255, 255, 0.18); }
+.btn-sound:active { transform: scale(0.93); }
+
+/* Son en cours de lecture */
+.btn-sound--playing {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+.btn-sound--playing::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  animation: sound-ripple 1.4s var(--ease-out-expo) infinite;
+  pointer-events: none;
+}
+
+@keyframes sound-ripple {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* ─── Sponsors ─────────────────────────────────────────── */
+.scoreboard__sponsors {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  gap: 0.25rem 0.4rem;
+  padding: 0.35rem 0.6rem;
+  background: #fff;
+}
+
+.sponsor-logo {
+  height: max(2.5rem, min(10vh, 8rem));
+  width: auto;
+  max-width: 8rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.2s var(--ease-out-quart);
+}
+.sponsor-logo:hover { opacity: 1; }
+
+/* ─── Reduced motion ───────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
