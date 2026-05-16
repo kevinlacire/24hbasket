@@ -160,15 +160,15 @@ html, body {
   100% { opacity: 0; }
 }
 
-.team--blue { background: #c2e2dd; }
-.team--red  { background: #f4dae3; }
+.team--blue { background: #038dff; }
+.team--red  { background: #ff0384; }
 
 .team__name {
   font-size: clamp(0.7rem, 1.5vw, 1rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #333;
+  color: #fff;
   opacity: 0.65;
 }
 

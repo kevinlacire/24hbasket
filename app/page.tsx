@@ -111,13 +111,6 @@ export default function Scoreboard() {
         style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 50, pointerEvents: 'none' }}
       />
 
-      {/* ── Header ── */}
-      <header className="scoreboard__header">
-        <button className="btn-mute" onClick={toggleMute}>
-          {isMuted ? '🔈 Son off' : '🔇 Mute'}
-        </button>
-      </header>
-
       {/* ── Countdown ── */}
       <div className="scoreboard__timer">
         <Countdown
@@ -192,6 +185,9 @@ export default function Scoreboard() {
             {label}
           </button>
         ))}
+        <button className="btn-sound" onClick={toggleMute}>
+          {isMuted ? '🔈 Son off' : '🔇 Mute'}
+        </button>
       </div>
     </div>
   );
