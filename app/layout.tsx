@@ -15,8 +15,8 @@ const scoremark = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Chrono 24h Basket 2025',
-  description: 'Tableau de bord officiel du tournoi 24h Basket',
+  title: 'Chrono 24h Basket 2026',
+  description: 'Chrono 24h Basket 2026',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

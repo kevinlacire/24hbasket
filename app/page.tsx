@@ -113,7 +113,6 @@ export default function Scoreboard() {
 
       {/* ── Header ── */}
       <header className="scoreboard__header">
-        <span className="scoreboard__title">🏀 Chrono 24h Basket 2025</span>
         <button className="btn-mute" onClick={toggleMute}>
           {isMuted ? '🔈 Son off' : '🔇 Mute'}
         </button>
