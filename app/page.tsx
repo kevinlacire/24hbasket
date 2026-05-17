@@ -11,7 +11,7 @@ const OFFICIAL_END = Date.UTC(2026, 4, 30, 17, 0, 0);
 
 const SOUNDS = [
   { label: '🙈 Airball',      song: 'airball'    },
-  { label: "🇺🇸 L'américain", song: 'usa',       random: true },
+  { label: "🇺🇸 L'américain",  song: 'usa',       random: true },
   { label: '💥 Kaboom',       song: 'kaboom',    random: true },
   { label: '🙅 No good',      song: 'no-good'    },
   { label: '🔥 On fire',      song: 'on-fire'    },
@@ -56,7 +56,7 @@ export default function Scoreboard() {
           fw.start();
           setTimeout(() => fw.stop(), 6000);
         }
-        new Howl({ src: ['tada.mp3'], html5: true }).play();
+        new Howl({ src: ['konami.mp3'], html5: true }).play();
       }
     }
     window.addEventListener('keydown', handleKey);
