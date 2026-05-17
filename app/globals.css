@@ -225,11 +225,11 @@ html, body {
 .btn-score:hover  { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .btn-score:active { transform: scale(0.92) translateY(0); box-shadow: none; }
 
-.btn-score--add { border-color: #2a9d5c; color: #1d7a44; }
-.btn-score--add:hover { background: #2a9d5c; color: #fff; }
+.btn-score--add { border-color: #36cc77; color: #fff; }
+.btn-score--add:hover { background: #36cc77; color: #fff; }
 
-.btn-score--sub { border-color: #c94040; color: #a33232; }
-.btn-score--sub:hover { background: #c94040; color: #fff; }
+.btn-score--sub { border-color: #ff5d5d; color: #fff; }
+.btn-score--sub:hover { background: #ff5d5d; color: #fff; }
 
 /* ─── Sound Effects ────────────────────────────────────── */
 .scoreboard__sounds {
