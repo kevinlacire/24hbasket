@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
+import { getAvailableEmojis } from '@remotion/animated-emoji';
 import { Howl, Howler } from 'howler';
 import Countdown from 'react-countdown';
 import { Fireworks } from '@fireworks-js/react';
@@ -25,11 +26,44 @@ const SOUNDS = [
 // ↑↑↓↓←→←→BA
 const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
 
-const CELEBRATION_EMOJIS = ['🏀','🔥','⭐','✨','🎉','🤩','😍','🤯','🥳','😱'];
+const CELEBRATION_EMOJIS = [
+  'confetti-ball', 'party-popper', 'sparkles', 'fire',
+  'star-struck', 'heart-eyes', 'mind-blown', 'partying-face', 'screaming', 'rofl',
+] as const;
+
+type CelebrationEmoji = typeof CELEBRATION_EMOJIS[number];
+
+const EMOJI_CODEPOINTS: Record<CelebrationEmoji, string> = Object.fromEntries(
+  getAvailableEmojis()
+    .filter(e => (CELEBRATION_EMOJIS as readonly string[]).includes(e.name))
+    .map(e => [e.name, e.codepoint])
+) as Record<CelebrationEmoji, string>;
+
+function EmojiLottie({ name, size }: { name: CelebrationEmoji; size: number }) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const codepoint = EMOJI_CODEPOINTS[name];
+  React.useEffect(() => {
+    let cancelled = false;
+    let anim: { destroy: () => void } | null = null;
+    import('lottie-web').then(mod => {
+      if (cancelled || !containerRef.current) return;
+      const lottie = mod.default ?? mod;
+      anim = (lottie as any).loadAnimation({
+        container: containerRef.current,
+        renderer: 'svg',
+        loop: false,
+        autoplay: true,
+        path: `https://fonts.gstatic.com/s/e/notoemoji/latest/${codepoint}/lottie.json`,
+      });
+    });
+    return () => { cancelled = true; anim?.destroy(); };
+  }, [codepoint]);
+  return <div ref={containerRef} style={{ width: size, height: size }} />;
+}
 
 type EmojiParticle = {
   id: number;
-  emoji: string;
+  emoji: CelebrationEmoji;
   x: number;
   y: number;
   delay: number;
@@ -112,13 +146,13 @@ export default function Scoreboard() {
     const rect = el.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const newParticles: EmojiParticle[] = Array.from({ length: 3 }, (_, i) => ({
-      id: Date.now() + i,
+    const newParticles: EmojiParticle[] = [{
+      id: Date.now(),
       emoji: CELEBRATION_EMOJIS[Math.floor(Math.random() * CELEBRATION_EMOJIS.length)],
-      x: cx + (Math.random() - 0.5) * rect.width * 0.6,
+      x: cx,
       y: cy,
-      delay: i * 100,
-    }));
+      delay: 0,
+    }];
     setEmojiParticles(prev => [...prev, ...newParticles]);
     setTimeout(() => {
       setEmojiParticles(prev => prev.filter(p => !newParticles.some(n => n.id === p.id)));
@@ -149,6 +183,19 @@ export default function Scoreboard() {
         options={{ opacity: 0.5 }}
         style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, zIndex: 50, pointerEvents: 'none' }}
       />
+
+      {/* ── Emoji particles ── */}
+      <div className="emoji-overlay">
+        {emojiParticles.map(p => (
+          <div
+            key={p.id}
+            className="emoji-particle"
+            style={{ left: p.x, top: p.y, animationDelay: `${p.delay}ms` }}
+          >
+            <EmojiLottie name={p.emoji} size={120} />
+          </div>
+        ))}
+      </div>
 
       {/* ── Countdown ── */}
       <div className="scoreboard__timer">

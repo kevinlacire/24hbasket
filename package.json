@@ -8,6 +8,7 @@
     "@fireworks-js/react": "^2.10.7",
     "@remotion/animated-emoji": "^4.0.462",
     "howler": "^2.2.3",
+    "lottie-web": "^5.13.0",
     "next": "^15.1.7",
     "react": "^19.0.0",
     "react-countdown": "^2.3.5",
