@@ -11,6 +11,9 @@ importers:
       '@fireworks-js/react':
         specifier: ^2.10.7
         version: 2.10.8(@types/react@19.0.8)(react@19.0.0)
+      '@remotion/animated-emoji':
+        specifier: ^4.0.462
+        version: 4.0.462(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       howler:
         specifier: ^2.2.3
         version: 2.2.3
@@ -303,6 +306,9 @@ packages:
   '@nolyfill/is-core-module@1.0.39':
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
+
+  '@remotion/animated-emoji@4.0.462':
+    resolution: {integrity: sha512-NjRXS+BVr3723nbk1cKepyMHaTgGI1V0uM8GSBtTwaoWS1o8BGPwLi/E7cV5L4U2XXNRZbRiItD1ioBzA1bgpA==}
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -1445,6 +1451,12 @@ packages:
     resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
     engines: {node: '>= 0.4'}
 
+  remotion@4.0.462:
+    resolution: {integrity: sha512-0bcwIiN7H0IcHtcDlfWHE2ho46RF0VmnVN1fAc26uMkonmAMMhqB+1aogfTE8eiYESEzFokh0lRc0t6pI8wzNA==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -1926,6 +1938,13 @@ snapshots:
       fastq: 1.19.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@remotion/animated-emoji@4.0.462(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      remotion: 4.0.462(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+    transitivePeerDependencies:
+      - react
+      - react-dom
 
   '@rtsao/scc@1.1.0': {}
 
@@ -3251,6 +3270,11 @@ snapshots:
       get-proto: 1.0.1
       gopd: 1.2.0
       set-function-name: 2.0.2
+
+  remotion@4.0.462(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   resolve-from@4.0.0: {}
 
