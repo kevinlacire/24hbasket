@@ -177,12 +177,12 @@ export default function Scoreboard() {
           <div className="team team--blue">
             <span key={`flash-blue-${scoreBlue}`} className="team__flash" aria-hidden="true" />
             <span className="team__name">Équipe Bleue</span>
-            <span key={scoreBlue} className={`team__score${shakeBlue ? ' team__score--shake' : ''}`}>
+            <span key={scoreBlue} ref={scoreBlueRef} className={`team__score${shakeBlue ? ' team__score--shake' : ''}`}>
               {scoreBlue}
             </span>
             <div className="team__controls">
-              <button className="btn-score btn-score--add" onClick={() => inc(+2, scoreBlue, setScoreBlue, setShakeBlue)}>+2</button>
-              <button className="btn-score btn-score--add" onClick={() => inc(+3, scoreBlue, setScoreBlue, setShakeBlue)}>+3</button>
+              <button className="btn-score btn-score--add" onClick={() => inc(+2, scoreBlue, setScoreBlue, setShakeBlue, scoreBlueRef)}>+2</button>
+              <button className="btn-score btn-score--add" onClick={() => inc(+3, scoreBlue, setScoreBlue, setShakeBlue, scoreBlueRef)}>+3</button>
               <button className="btn-score btn-score--sub" onClick={() => inc(-2, scoreBlue, setScoreBlue, setShakeBlue)}>−2</button>
               <button className="btn-score btn-score--sub" onClick={() => inc(-3, scoreBlue, setScoreBlue, setShakeBlue)}>−3</button>
             </div>
@@ -192,12 +192,12 @@ export default function Scoreboard() {
           <div className="team team--red">
             <span key={`flash-red-${scoreRed}`} className="team__flash" aria-hidden="true" />
             <span className="team__name">Équipe Rouge</span>
-            <span key={scoreRed} className={`team__score${shakeRed ? ' team__score--shake' : ''}`}>
+            <span key={scoreRed} ref={scoreRedRef} className={`team__score${shakeRed ? ' team__score--shake' : ''}`}>
               {scoreRed}
             </span>
             <div className="team__controls">
-              <button className="btn-score btn-score--add" onClick={() => inc(+2, scoreRed, setScoreRed, setShakeRed)}>+2</button>
-              <button className="btn-score btn-score--add" onClick={() => inc(+3, scoreRed, setScoreRed, setShakeRed)}>+3</button>
+              <button className="btn-score btn-score--add" onClick={() => inc(+2, scoreRed, setScoreRed, setShakeRed, scoreRedRef)}>+2</button>
+              <button className="btn-score btn-score--add" onClick={() => inc(+3, scoreRed, setScoreRed, setShakeRed, scoreRedRef)}>+3</button>
               <button className="btn-score btn-score--sub" onClick={() => inc(-2, scoreRed, setScoreRed, setShakeRed)}>−2</button>
               <button className="btn-score btn-score--sub" onClick={() => inc(-3, scoreRed, setScoreRed, setShakeRed)}>−3</button>
             </div>
