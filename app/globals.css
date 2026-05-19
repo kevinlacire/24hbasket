@@ -306,6 +306,27 @@ html, body {
 }
 .sponsor-logo:hover { opacity: 1; }
 
+/* ─── Emoji particles ──────────────────────────────────── */
+.emoji-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 49;
+  overflow: hidden;
+}
+
+.emoji-particle {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: emojiFloat 1.4s var(--ease-out-expo) forwards;
+}
+
+@keyframes emojiFloat {
+  0%   { opacity: 1;   transform: translate(-50%, -50%) translateY(0)      scale(1);   }
+  60%  { opacity: 0.9;                                                                  }
+  100% { opacity: 0;   transform: translate(-50%, -50%) translateY(-130px) scale(0.5); }
+}
+
 /* ─── Reduced motion ───────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
