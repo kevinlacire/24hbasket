@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Howl, Howler } from 'howler';
 import Countdown from 'react-countdown';
 import { Fireworks } from '@fireworks-js/react';
@@ -90,13 +90,39 @@ export default function Scoreboard() {
     setTimerUrgency(prev => prev === next ? prev : next);
   }
 
-  function inc(delta: number, score: number, set: (n: number) => void, setShake: (b: boolean) => void) {
+  function inc(
+    delta: number,
+    score: number,
+    set: (n: number) => void,
+    setShake: (b: boolean) => void,
+    scoreRef?: React.RefObject<HTMLSpanElement | null>,
+  ) {
     if (score + delta < 0) {
       setShake(true);
       setTimeout(() => setShake(false), 500);
       return;
     }
     set(score + delta);
+    if (scoreRef) spawnEmojis(scoreRef);
+  }
+
+  function spawnEmojis(ref: React.RefObject<HTMLSpanElement | null>) {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const newParticles: EmojiParticle[] = Array.from({ length: 3 }, (_, i) => ({
+      id: Date.now() + i,
+      emoji: CELEBRATION_EMOJIS[Math.floor(Math.random() * CELEBRATION_EMOJIS.length)],
+      x: cx + (Math.random() - 0.5) * rect.width * 0.6,
+      y: cy,
+      delay: i * 100,
+    }));
+    setEmojiParticles(prev => [...prev, ...newParticles]);
+    setTimeout(() => {
+      setEmojiParticles(prev => prev.filter(p => !newParticles.some(n => n.id === p.id)));
+    }, 1500);
   }
 
   function toggleMute() {
