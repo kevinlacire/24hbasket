@@ -25,6 +25,16 @@ const SOUNDS = [
 // ↑↑↓↓←→←→BA
 const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
 
+const CELEBRATION_EMOJIS = ['🏀','🔥','⭐','✨','🎉','🤩','😍','🤯','🥳','😱'];
+
+type EmojiParticle = {
+  id: number;
+  emoji: string;
+  x: number;
+  y: number;
+  delay: number;
+};
+
 export default function Scoreboard() {
   const [scoreBlue, setScoreBlue] = useState(() =>
     typeof window !== 'undefined' ? Number(localStorage.getItem('scoreBlue')) || 0 : 0
@@ -39,6 +49,9 @@ export default function Scoreboard() {
   const [timerUrgency, setTimerUrgency] = useState<'normal' | 'warning' | 'critical'>('normal');
   const fireworksRef = useRef<FireworksHandlers>(null);
   const konamiSeq    = useRef<string[]>([]);
+  const scoreBlueRef = useRef<HTMLSpanElement>(null);
+  const scoreRedRef  = useRef<HTMLSpanElement>(null);
+  const [emojiParticles, setEmojiParticles] = useState<EmojiParticle[]>([]);
 
   useExitPrompt(true);
 
